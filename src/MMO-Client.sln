@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMO-Client.CSharp", "MMO-Client.CSharp.csproj", "{D41C5253-2AED-6715-9763-684B2D5D7D34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMO-Client.CSharp.Editor", "MMO-Client.CSharp.Editor.csproj", "{A86BA6F0-CCD2-8D5A-6592-92D998371FD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D41C5253-2AED-6715-9763-684B2D5D7D34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D41C5253-2AED-6715-9763-684B2D5D7D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D41C5253-2AED-6715-9763-684B2D5D7D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D41C5253-2AED-6715-9763-684B2D5D7D34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A86BA6F0-CCD2-8D5A-6592-92D998371FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A86BA6F0-CCD2-8D5A-6592-92D998371FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A86BA6F0-CCD2-8D5A-6592-92D998371FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A86BA6F0-CCD2-8D5A-6592-92D998371FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
