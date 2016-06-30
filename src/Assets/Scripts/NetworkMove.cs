@@ -10,11 +10,10 @@ public class NetworkMove : MonoBehaviour {
     {
         Debug.Log("sending position to server " + position);
 
-        var jsonPos = new JSONObject();
-        jsonPos.AddField("x", position.x);
-        jsonPos.AddField("y", position.y);
-        jsonPos.AddField("z", position.z);
+        var jsonPos = Network.VectorToJson(position);
 
         socket.Emit("move", jsonPos);
     }
+
+    
 }
