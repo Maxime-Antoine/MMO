@@ -14,6 +14,4 @@ public class NetworkMove : MonoBehaviour {
 
         socket.Emit("move", jsonPos);
     }
-
-    
 }

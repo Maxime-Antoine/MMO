@@ -1,0 +1,40 @@
+﻿using SocketIO;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Spawner : MonoBehaviour
+{
+    public GameObject myPlayer;
+    public GameObject playerPrefab;
+    public SocketIOComponent socket;
+    
+    private Dictionary<string, GameObject> _players = new Dictionary<string, GameObject>();
+
+    public GameObject SpawnPlayer(string id)
+    {
+        var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+
+        player.GetComponent<ClickFollow>().myPlayerFollower = myPlayer.GetComponent<Follower>();
+        player.GetComponent<NetworkFollow>().socket = socket;
+        player.GetComponent<NetworkEntity>().id = id;
+
+        AddPlayer(id, player);
+
+        return player;
+    }
+
+    public GameObject FindPlayer(string id)
+    {
+        return _players[id];
+    }
+
+    public void AddPlayer(string id, GameObject player)
+    {
+        _players.Add(id, player);
+    }
+
+    public void RemovePlayer(string id)
+    {
+        _players.Remove(id);
+    }
+}

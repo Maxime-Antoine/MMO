@@ -1,26 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class ClickMove : MonoBehaviour {
+public class ClickMove : MonoBehaviour, IClickable {
 
     public GameObject player;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    #region IClickable implementation
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
-    public void OnClick (Vector3 position)
+    public void OnClick (RaycastHit hit)
     {
-        var navpos = player.GetComponent<NavigatePosition>();
-        var netMove = player.GetComponent<NetworkMove>();
-        navpos.NavigateTo(position);
+        Debug.Log("Moving to " + hit.point);
 
-        netMove.OnMove(position);
+        var navigator = player.GetComponent<Navigator>();
+        var netMove = player.GetComponent<NetworkMove>();
+        navigator.NavigateTo(hit.point);
+
+        netMove.OnMove(hit.point);
 	}
+
+    #endregion
 }

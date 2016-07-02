@@ -74,11 +74,17 @@
   <ItemGroup>
     <Compile Include="Assets\Mecanim Warrior Anim Free\Script\PlayGUI.cs" />
     <Compile Include="Assets\Scripts\CameraMove.cs" />
+    <Compile Include="Assets\Scripts\ClickFollow.cs" />
     <Compile Include="Assets\Scripts\ClickMove.cs" />
-    <Compile Include="Assets\Scripts\NavigatePosition.cs" />
+    <Compile Include="Assets\Scripts\Follower.cs" />
+    <Compile Include="Assets\Scripts\IClickable.cs" />
+    <Compile Include="Assets\Scripts\Navigator.cs" />
     <Compile Include="Assets\Scripts\Network.cs" />
+    <Compile Include="Assets\Scripts\NetworkEntity.cs" />
+    <Compile Include="Assets\Scripts\NetworkFollow.cs" />
     <Compile Include="Assets\Scripts\NetworkMove.cs" />
     <Compile Include="Assets\Scripts\ScreenClicker.cs" />
+    <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\SocketIO\JSONObject\JSONObject.cs" />
     <Compile Include="Assets\SocketIO\JSONObject\JSONTemplates.cs" />
     <Compile Include="Assets\SocketIO\JSONObject\VectorTemplates.cs" />

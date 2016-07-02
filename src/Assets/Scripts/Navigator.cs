@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NavigatePosition : MonoBehaviour {
+public class Navigator : MonoBehaviour {
 
     private NavMeshAgent _agent;
 
