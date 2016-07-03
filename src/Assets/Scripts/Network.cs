@@ -37,26 +37,24 @@ public class Network : MonoBehaviour {
         var playerId = evt.data.GetField("id").str;
         Debug.Log("spawn - id: " + playerId);
         var player = spawner.SpawnPlayer(playerId);
-        
-        //update player movement
-		var targetPosition = new Vector3(_GetFloatFromJson(evt.data["targetPosition"], "x"), 
-										 _GetFloatFromJson(evt.data["targetPosition"], "y"), 
-										 _GetFloatFromJson(evt.data["targetPosition"], "z"));
 
-		var navigatePos = player.GetComponent<Navigator>();
-		navigatePos.NavigateTo(targetPosition);
-		Debug.Log("Player " + playerId + " moving to (x: " + targetPosition.x + ", y: " + targetPosition.y + ", z: " + targetPosition.z + ")");
+        //update player movement
+        var targetPosition = _GetVectorFromJson(evt.data);
+
+        var navigatePos = player.GetComponent<Navigator>();
+        navigatePos.NavigateTo(targetPosition);
+        Debug.Log("Player " + playerId + " moving to (x: " + targetPosition.x + ", y: " + targetPosition.y + ", z: " + targetPosition.z + ")");
     }
 
     private void OnMove(SocketIOEvent evt)
     {
-        Debug.Log("player " + evt.data.GetField("id") + " is moving to x: " + evt.data.GetField("x") + " z: " + evt.data.GetField("z"));
-
         var player = spawner.FindPlayer(evt.data["id"].str);
 
-        var position = new Vector3(_GetFloatFromJson(evt.data, "x"), 0, _GetFloatFromJson(evt.data, "z"));
+        var position = _GetVectorFromJson(evt.data);
         var navigatePos = player.GetComponent<Navigator>();
         navigatePos.NavigateTo(position);
+
+        Debug.Log("player " + evt.data["id"].str + " is moving to x: " + position.x + " y: " + position.y + " z: " + position.z);
     }
 
     private void OnFollow(SocketIOEvent evt)
@@ -89,7 +87,7 @@ public class Network : MonoBehaviour {
     {
         Debug.Log("Updating position " + evt.data);
 
-        var position = new Vector3(_GetFloatFromJson(evt.data, "x"), _GetFloatFromJson(evt.data, "y"), _GetFloatFromJson(evt.data, "z"));
+        var position = _GetVectorFromJson(evt.data);
         var player = spawner.FindPlayer(evt.data["id"].str);
 
         player.transform.position = position;
@@ -99,9 +97,11 @@ public class Network : MonoBehaviour {
 
     #region Private Helpers
 
-    private float _GetFloatFromJson(JSONObject data, string key)
+    private static Vector3 _GetVectorFromJson(JSONObject json)
     {
-        return float.Parse(data[key].ToString().Replace("\"", ""));
+        return new Vector3(json["targetPosition"]["x"].n,
+                           json["targetPosition"]["y"].n,
+                           json["targetPosition"]["z"].n);
     }
 
     #endregion
