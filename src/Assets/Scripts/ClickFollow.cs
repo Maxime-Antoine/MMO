@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class ClickFollow : MonoBehaviour, IClickable
 {
-    public Follower myPlayerFollower;
+    public GameObject myPlayer;
     private NetworkEntity _networkEntity;
+    private Targeter _myPlayerTargeter;
 
     void Start()
     {
         _networkEntity = GetComponent<NetworkEntity>();
+        _myPlayerTargeter = myPlayer.GetComponent<Targeter>();
     }
 
     #region IClickable implementation
@@ -17,9 +19,9 @@ public class ClickFollow : MonoBehaviour, IClickable
     {
         Debug.Log("Following " + hit.collider.gameObject.name);
 
-        GetComponent<NetworkFollow>().OnFollow(_networkEntity.id);
+        Network.Follow(_networkEntity.id);
 
-        myPlayerFollower.target = transform;
+        _myPlayerTargeter.target = transform;
     }
 
     #endregion

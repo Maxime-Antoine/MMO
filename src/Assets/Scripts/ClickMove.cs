@@ -11,10 +11,9 @@ public class ClickMove : MonoBehaviour, IClickable {
         Debug.Log("Moving to " + hit.point);
 
         var navigator = player.GetComponent<Navigator>();
-        var netMove = player.GetComponent<NetworkMove>();
         navigator.NavigateTo(hit.point);
 
-        netMove.OnMove(hit.point);
+        Network.Move(hit.point);
 	}
 
     #endregion

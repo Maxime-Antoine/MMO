@@ -9,7 +9,6 @@ public class Network : MonoBehaviour {
     public GameObject myPlayer;
     public Spawner spawner;
 
-
     // Use this for initialization
     void Start ()
     {
@@ -18,6 +17,7 @@ public class Network : MonoBehaviour {
         _socket.On("spawn", OnSpawn);
         _socket.On("move", OnMove);
         _socket.On("follow", OnFollow);
+        _socket.On("attack", OnAttack);
         _socket.On("clientDisconnected", OnDisconnect);
         _socket.On("requestPosition", OnRequestPosition);
         _socket.On("updatePosition", OnUpdatePosition);
@@ -63,8 +63,19 @@ public class Network : MonoBehaviour {
 
         var player = spawner.FindPlayer(evt.data["id"].str);
         var target = spawner.FindPlayer(evt.data["targetId"].str);
-        var follower = player.GetComponent<Follower>();
+        var follower = player.GetComponent<Targeter>();
         follower.target = target.transform;
+    }
+
+    private void OnAttack(SocketIOEvent evt)
+    {
+        Debug.Log("Received attack " + evt.data);
+
+        var targetPlayer = spawner.FindPlayer(evt.data["targetId"].str);
+        targetPlayer.GetComponent<Hittable>().health -= 10;
+
+        var attackingPlayer = spawner.FindPlayer(evt.data["id"].str);
+        attackingPlayer.GetComponent<Animator>().SetTrigger("Attack");
     }
 
     private void OnDisconnect(SocketIOEvent evt)
@@ -124,6 +135,35 @@ public class Network : MonoBehaviour {
         json.AddField("targetId", id);
 
         return json;
+    }
+
+    #endregion
+
+    #region Public Static Methods
+
+    public static void Move(Vector3 position)
+    {
+        Debug.Log("sending position to server " + position);
+
+        var jsonPos = Network.VectorToJson(position);
+
+        _socket.Emit("move", jsonPos);
+    }
+
+    public static void Follow(string id)
+    {
+        var jsonId = Network.PlayerIdToJson(id);
+
+        Debug.Log("sending follow player id to server " + jsonId);
+
+        _socket.Emit("follow", jsonId);
+    }
+
+    public static void Attack(string targetId)
+    {
+        var jsonId = PlayerIdToJson(targetId);
+        Debug.Log("Attacking player " + jsonId);
+        _socket.Emit("attack", jsonId);
     }
 
     #endregion

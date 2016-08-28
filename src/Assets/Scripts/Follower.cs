@@ -2,7 +2,7 @@
 
 public class Follower : MonoBehaviour
 {
-    public Transform target;
+    public Targeter targeter;
 
     public float scanFrequency = 0.5f;
     public float stopFollowDistance = 1;
@@ -14,16 +14,17 @@ public class Follower : MonoBehaviour
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        targeter = GetComponent<Targeter>();
     }
 
     
     // Update is called once per frame
     void Update()
     {
-        if (IsReadyToScan() && IsNotInRange())
+        if (IsReadyToScan() && !targeter.IsInRange(stopFollowDistance))
         {
             Debug.Log("Scanning nav path");
-            _agent.SetDestination(target.position);
+            _agent.SetDestination(targeter.target.position);
         }
     }
 
@@ -31,12 +32,7 @@ public class Follower : MonoBehaviour
 
     private bool IsReadyToScan()
     {
-        return Time.time - _lastScanTime > scanFrequency && target;
-    }
-
-    private bool IsNotInRange()
-    {
-        return Vector3.Distance(target.position, transform.position) > stopFollowDistance;
+        return Time.time - _lastScanTime > scanFrequency && targeter.target;
     }
 
     #endregion
