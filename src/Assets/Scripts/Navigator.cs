@@ -26,4 +26,9 @@ public class Navigator : MonoBehaviour {
         _targeter.target = null;
         _animator.SetBool("Attack", false);
 	}
+
+    public void ResetDestination()
+    {
+        _agent.SetDestination(transform.position);
+    }
 }

@@ -8,6 +8,9 @@ public class ClickMove : MonoBehaviour, IClickable {
 
     public void OnClick (RaycastHit hit)
     {
+        if (GetComponent<Hittable>() && GetComponent<Hittable>().IsDead)
+            return;
+
         Debug.Log("Moving to " + hit.point);
 
         var navigator = player.GetComponent<Navigator>();

@@ -10,4 +10,9 @@ public class Targeter : MonoBehaviour {
         var distance = Vector3.Distance(target.position, base.transform.position);
         return distance < stopFollowDistance;
     }
+
+    public void ResetTarget()
+    {
+        target = null;
+    }
 }

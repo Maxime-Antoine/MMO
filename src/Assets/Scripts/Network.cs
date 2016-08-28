@@ -36,7 +36,7 @@ public class Network : MonoBehaviour {
     {
         var playerId = evt.data.GetField("id").str;
         Debug.Log("spawn - id: " + playerId);
-        var player = spawner.SpawnPlayer(playerId);
+        var player = spawner.SpawnPlayer(playerId, Vector3.zero); //todo: update with current position
 
         //update player movement
         var targetPosition = _GetVectorFromJson(evt.data);
@@ -50,7 +50,7 @@ public class Network : MonoBehaviour {
     {
         var player = spawner.FindPlayer(evt.data["id"].str);
 
-        var position = _GetVectorFromJson(evt.data);
+        var position = _GetVectorFromJson(evt.data["targetPosition"]);
         var navigatePos = player.GetComponent<Navigator>();
         navigatePos.NavigateTo(position);
 
@@ -72,7 +72,7 @@ public class Network : MonoBehaviour {
         Debug.Log("Received attack " + evt.data);
 
         var targetPlayer = spawner.FindPlayer(evt.data["targetId"].str);
-        targetPlayer.GetComponent<Hittable>().health -= 10;
+        targetPlayer.GetComponent<Hittable>().OnHit();
 
         var attackingPlayer = spawner.FindPlayer(evt.data["id"].str);
         attackingPlayer.GetComponent<Animator>().SetTrigger("Attack");
@@ -110,9 +110,9 @@ public class Network : MonoBehaviour {
 
     private static Vector3 _GetVectorFromJson(JSONObject json)
     {
-        return new Vector3(json["targetPosition"]["x"].n,
-                           json["targetPosition"]["y"].n,
-                           json["targetPosition"]["z"].n);
+        return new Vector3(json["x"].n,
+                           json["y"].n,
+                           json["z"].n);
     }
 
     #endregion

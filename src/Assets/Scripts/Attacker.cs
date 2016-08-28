@@ -19,7 +19,16 @@ public class Attacker : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-	    if (isReadyToAttack() && _targeter.IsInRange(attackDistance))
+        if (!isReadyToAttack())
+            return;
+
+        if (isTargetDead())
+        {
+            _targeter.ResetTarget();
+            return;
+        }
+
+	    if (_targeter.IsInRange(attackDistance))
         {
             Debug.Log("Attacking " + _targeter.target.name);
 
@@ -33,5 +42,10 @@ public class Attacker : MonoBehaviour {
     bool isReadyToAttack()
     {
         return Time.time - _lastAttackTime > attackRate && _targeter.target;
+    }
+
+    bool isTargetDead()
+    {
+        return _targeter.target.GetComponent<Hittable>().IsDead;
     }
 }

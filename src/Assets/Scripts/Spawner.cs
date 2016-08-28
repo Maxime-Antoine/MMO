@@ -10,9 +10,9 @@ public class Spawner : MonoBehaviour
     
     private Dictionary<string, GameObject> _players = new Dictionary<string, GameObject>();
 
-    public GameObject SpawnPlayer(string id)
+    public GameObject SpawnPlayer(string id, Vector3 position)
     {
-        var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        var player = Instantiate(playerPrefab, position, Quaternion.identity) as GameObject;
 
         player.GetComponent<ClickFollow>().myPlayer = myPlayer;
         player.GetComponent<NetworkEntity>().id = id;
