@@ -1,5 +1,3 @@
-
-build
-
-src/Temp
 src/Library
+src/Temp
+.suo
