@@ -27,9 +27,15 @@ public class Network : MonoBehaviour {
 
     private void OnRegister(SocketIOEvent evt)
     {
-        Debug.Log("Successfully registered with id: " + evt.data);
+        var playerId = ApplicationModel.PlayerId;
 
-        spawner.AddPlayer(evt.data["id"].str, myPlayer);
+        Debug.Log("Registration required: registering with id: " + playerId);
+
+        var json = new JSONObject();
+        json.AddField("playerId", playerId);
+        _socket.Emit("registering", json);
+
+        spawner.AddPlayer(playerId, myPlayer);
     }
 
     private void OnSpawn(SocketIOEvent evt)
