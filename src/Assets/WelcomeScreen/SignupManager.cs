@@ -25,6 +25,8 @@ public class SignupManager : MonoBehaviour
 
     private void _Signup()
     {
+        _CheckNameAvailability(LoginInput.text); //in case this is the last field updated by user and focus is not lost
+
         if (PasswordInput.text != null
          && LoginInput.text != null
          && EmailInput.text != null
