@@ -16,6 +16,7 @@ public class Network : MonoBehaviour {
         _socket.On("register", OnRegister);
         _socket.On("spawn", OnSpawn);
         _socket.On("move", OnMove);
+        _socket.On("iddlePosition", OnIddlePosition);
         _socket.On("follow", OnFollow);
         _socket.On("attack", OnAttack);
         _socket.On("clientDisconnected", OnDisconnect);
@@ -41,8 +42,9 @@ public class Network : MonoBehaviour {
     private void OnSpawn(SocketIOEvent evt)
     {
         var playerId = evt.data.GetField("id").str;
-        Debug.Log("spawn - id: " + playerId);
-        var player = spawner.SpawnPlayer(playerId, Vector3.zero); //todo: update with current position
+        var spawnLocation = _GetVectorFromJson(evt.data.GetField("targetPosition"));
+        Debug.Log("spawn - id: " + playerId + " - position x: " + spawnLocation.x + " y: " + spawnLocation.y + " z: " + spawnLocation.z);
+        var player = spawner.SpawnPlayer(playerId, spawnLocation);
 
         //update player movement
         var targetPosition = _GetVectorFromJson(evt.data);
@@ -61,6 +63,16 @@ public class Network : MonoBehaviour {
         navigatePos.NavigateTo(position);
 
         Debug.Log("player " + evt.data["id"].str + " is moving to x: " + position.x + " y: " + position.y + " z: " + position.z);
+    }
+
+    private void OnIddlePosition(SocketIOEvent evt)
+    {
+        var player = spawner.FindPlayer(evt.data["id"].str);
+
+        var position = _GetVectorFromJson(evt.data["targetPosition"]);
+        player.transform.position = position;
+
+        Debug.Log("Player " + evt.data["id"].str + " iddle at: " + position.x + " y: " + position.y + " z: " + position.z);
     }
 
     private void OnFollow(SocketIOEvent evt)
@@ -149,19 +161,22 @@ public class Network : MonoBehaviour {
 
     public static void Move(Vector3 position)
     {
-        Debug.Log("sending position to server " + position);
-
-        var jsonPos = Network.VectorToJson(position);
-
+        Debug.Log("sending target position to server " + position);
+        var jsonPos = VectorToJson(position);
         _socket.Emit("move", jsonPos);
+    }
+
+    public static void IddlePosition(Vector3 position)
+    {
+        Debug.Log("sending iddle position to server" + position);
+        var jsonPos = VectorToJson(position);
+        _socket.Emit("iddlePosition", jsonPos);
     }
 
     public static void Follow(string id)
     {
         var jsonId = Network.PlayerIdToJson(id);
-
         Debug.Log("sending follow player id to server " + jsonId);
-
         _socket.Emit("follow", jsonId);
     }
 

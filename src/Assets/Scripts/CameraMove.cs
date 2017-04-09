@@ -9,7 +9,7 @@ public class CameraMove : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _mainCamera = this.gameObject;
+        _mainCamera = gameObject;
 
         var playerPos = player.transform.position;
         var cameraPos = _mainCamera.transform.position;

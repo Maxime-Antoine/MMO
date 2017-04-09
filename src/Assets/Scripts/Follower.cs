@@ -8,12 +8,12 @@ public class Follower : MonoBehaviour
     public float stopFollowDistance = 1;
 
     private float _lastScanTime = 0;
-    private NavMeshAgent _agent;
+    private UnityEngine.AI.NavMeshAgent _agent;
 
     // Use this for initialization
     void Start()
     {
-        _agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         targeter = GetComponent<Targeter>();
     }
 

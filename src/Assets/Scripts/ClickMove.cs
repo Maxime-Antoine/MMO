@@ -4,8 +4,6 @@ public class ClickMove : MonoBehaviour, IClickable {
 
     public GameObject player;
 
-    #region IClickable implementation
-
     public void OnClick (RaycastHit hit)
     {
         if (GetComponent<Hittable>() && GetComponent<Hittable>().IsDead)
@@ -15,9 +13,5 @@ public class ClickMove : MonoBehaviour, IClickable {
 
         var navigator = player.GetComponent<Navigator>();
         navigator.NavigateTo(hit.point);
-
-        Network.Move(hit.point);
 	}
-
-    #endregion
 }
