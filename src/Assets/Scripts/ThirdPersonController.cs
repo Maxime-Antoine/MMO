@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class ThirdPersonController : MonoBehaviour {
 
-    private float _speed = 10f; //walk speed
+    private float _speed = 7.5f; //walk speed
     private float _degreesPerSecond = 600f; //rotation speed
-    private float _updateNetworkEverySecs = 0.33f;
+    private float _updateNetworkEverySecs = 0.5f;
     private bool _walking = false;
     private IEnumerator _networkPositionUpdater;
     private Quaternion _targetRotation;
@@ -99,7 +99,7 @@ public class ThirdPersonController : MonoBehaviour {
         while(true)
         {
             yield return new WaitForSeconds(_updateNetworkEverySecs);
-            Network.IddlePosition(_characterTransform.position);
+            Network.Move(_characterTransform.position);
         }
     }
 }

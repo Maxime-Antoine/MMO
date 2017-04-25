@@ -72,6 +72,9 @@ public class Network : MonoBehaviour {
         var position = _GetVectorFromJson(evt.data["targetPosition"]);
         player.transform.position = position;
 
+        var navigator = player.GetComponent<Navigator>();
+        navigator.StopNavigate();
+
         Debug.Log("Player " + evt.data["id"].str + " iddle at: " + position.x + " y: " + position.y + " z: " + position.z);
     }
 

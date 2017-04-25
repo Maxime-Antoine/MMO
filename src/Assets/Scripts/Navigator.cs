@@ -28,7 +28,6 @@ public class Navigator : MonoBehaviour {
         _agent.isStopped = false;
         _targeter.target = null;
         _animator.SetBool("Attack", false);
-        Network.Move(destination);
     }
 
     public void ResetDestination()

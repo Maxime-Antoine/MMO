@@ -1,4 +1,4 @@
 src/Library
 src/Temp
-.suo
-/builds
+*.suo
+build
